@@ -20,7 +20,7 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data:", fields);
+    console.log(fields);
   };
 
   return (
