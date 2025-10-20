@@ -1,96 +1,73 @@
-
 import React, { useState } from "react";
-import './../styles/App.css';
 
-  function DynamicForm() {
-    // State to store multiple sets of fields
-    const [fields, setFields] = useState([
-      { name: "", age: "" } // Initial form fields
-    ]);
+function App() {
+  const [fields, setFields] = useState([{ name: "", age: "" }]);
 
-    // Function to handle input change
-    const handleChange = (index, event) => {
-      const { name, value } = event.target;
-      const newFields = [...fields];
-      newFields[index][name] = value;
-      setFields(newFields);
-    };
+  const handleChange = (index, e) => {
+    const { name, value } = e.target;
+    const newFields = [...fields];
+    newFields[index][name] = value;
+    setFields(newFields);
+  };
 
-    // Function to add new field set
-    const handleAddField = () => {
-      setFields([...fields, { name: "", age: "" }]);
-    };
+  const handleAddField = () => {
+    setFields([...fields, { name: "", age: "" }]);
+  };
 
-    // Function to remove a specific field set
-    const handleRemoveField = (index) => {
-      const newFields = fields.filter((_, i) => i !== index);
-      setFields(newFields);
-    };
+  const handleRemoveField = (index) => {
+    setFields(fields.filter((_, i) => i !== index));
+  };
 
-    // Function to handle form submission
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      console.log("Form Data:", fields);
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form Data:", fields);
+  };
 
-    return (
-      <div style={styles.container}>
-        <h2>Dynamic Fields Form</h2>
-        <form onSubmit={handleSubmit}>
-          {fields.map((field, index) => (
-            <div key={index} style={styles.fieldContainer}>
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                value={field.name}
-                onChange={(e) => handleChange(index, e)}
-                required
-                style={styles.input}
-              />
-              <input
-                type="number"
-                name="age"
-                placeholder="Age"
-                value={field.age}
-                onChange={(e) => handleChange(index, e)}
-                required
-                style={styles.input}
-              />
-              <button
-                type="button"
-                onClick={() => handleRemoveField(index)}
-                style={styles.removeButton}
-              >
-                Remove
-              </button>
-            </div>
-          ))}
+  return (
+    <div data-testid="dynamic-form">
+      <h2>Dynamic Fields Form</h2>
 
-          <div style={styles.buttonContainer}>
+      <form onSubmit={handleSubmit}>
+        {fields.map((field, index) => (
+          <div key={index}>
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={field.name}
+              onChange={(e) => handleChange(index, e)}
+              data-testid={`name-${index}`}
+              required
+            />
+            <input
+              type="number"
+              name="age"
+              placeholder="Age"
+              value={field.age}
+              onChange={(e) => handleChange(index, e)}
+              data-testid={`age-${index}`}
+              required
+            />
             <button
               type="button"
-              onClick={handleAddField}
-              style={styles.addButton}
+              onClick={() => handleRemoveField(index)}
+              data-testid={`remove-${index}`}
             >
-              + Add More
-            </button>
-            <button type="submit" style={styles.submitButton}>
-              Submit
+              Remove
             </button>
           </div>
-        </form>
-      </div>
-    );
-  }
+        ))}
 
-const App = () => {
-  return (
-    <div>
-        {/* Do not remove the main div */}
-     <DynamicForm />
+        <button type="button" onClick={handleAddField} data-testid="add-field">
+          + Add More
+        </button>
+
+        <button type="submit" data-testid="submit-form">
+          Submit
+        </button>
+      </form>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
