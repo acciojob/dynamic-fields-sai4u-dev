@@ -59,7 +59,7 @@ function App() {
         ))}
 
         <button type="button" onClick={handleAddField} data-testid="add-field">
-          + Add More
+          Add More..
         </button>
 
         <button type="submit" data-testid="submit-form">
